@@ -1,0 +1,104 @@
+.product{
+    padding:20px 50px;
+    display: flex;
+    gap:50px; //between left and right
+    .left{
+        flex:1; //left and right will have the same width
+        display: flex;
+        gap: 20px;
+        .images{
+            flex:1;
+            img{
+                width:100%;
+                height:150px;
+                object-fit: cover;
+                cursor: pointer;
+                margin-bottom: 10px;
+            }
+        }
+        .mainImg{
+            flex:5; //mainImg will be 5 times bigger than images
+            img{
+                width:100%;
+                max-height: 800px;
+                object-fit: cover;
+            }
+        }
+    }
+    .right{
+        flex:1; //left and right will have the same width
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .price{
+            font-size: 30px;
+            color: #2879fe;
+            font-weight:500;
+        }
+        p{
+            font-size:18px;
+            font-weight:300;
+            text-align: justify;
+        }
+        .quantity{
+            display: flex;
+            align-items: center;
+            gap:10px;
+
+            button{
+                width: 50px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                border: none;
+            }
+        }
+        .add{
+            width: 250px;
+            padding: 10px;
+            background-color: #2879fe;
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            cursor: pointer;
+            border: none;
+        }
+        .links{
+            display: flex;
+            gap: 20px;
+
+            .item{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color:#2879fe;
+                font-size: 14px;
+            }
+        }
+        .info{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            color: #777;
+            font-size: 14px;
+            font-weight: 400;
+            hr{
+                width: 300px;
+                border: 1px solid #ededed;
+                margin-left: 0; // make hr left aligned
+            }
+        }
+        hr{
+            width: 400px;
+            border: 1px solid #dcdcdc;
+            margin-left: 0;
+        }
+
+    }
+}
