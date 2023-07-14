@@ -4,11 +4,34 @@ import "./Products.scss";
 
 import List from "../../components/List/List";
 import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
 const Products = () => {
   const catId = parseInt(useParams().id); //convert the string to int
   const [maxPrice, setMaxPrice] = useState(1000);
   const [sort, setSort] = useState(null);
+
+  {
+    /* Grab subcategories from Strapi as left side categories filter */
+  }
+  const { data, loading, error } = useFetch(
+    `/sub-categories?[filters][categories][id][$eq]=${catId}`
+  );
+
+  {
+    /* Handle checked filter */
+  }
+  const [selectedSubCats, setSelectedSubCats] = useState([]);
+  const handleChange = (e) => {
+    const changedId = e.target.value;
+    const isChecked = e.target.checked;
+
+    setSelectedSubCats(
+      isChecked
+        ? [...selectedSubCats, changedId]
+        : selectedSubCats.filter((id) => id !== changedId)
+    );
+  };
 
   return (
     <div className="products">
@@ -16,18 +39,18 @@ const Products = () => {
         {/* Product Categories Starts here */}
         <div className="filterItem">
           <h2>Product Categories</h2>
-          <div className="inputItem">
-            <input type="checkbox" id="1" value="T-shirt"></input>
-            <label htmlFor="1">T-shirt</label>
-          </div>
-          <div className="inputItem">
-            <input type="checkbox" id="2" value="Shoes"></input>
-            <label htmlFor="2">Shoes</label>
-          </div>
-          <div className="inputItem">
-            <input type="checkbox" id="3" value="Jackets"></input>
-            <label htmlFor="3">Jackets</label>
-          </div>
+          {/* map Strapi data */}
+          {data?.map((item) => (
+            <div className="inputItem" key={item.id}>
+              <input
+                type="checkbox"
+                id={item.id}
+                value={item.id}
+                onChange={handleChange}
+              ></input>
+              <label htmlFor={item.id}>{item.attributes.title}</label>
+            </div>
+          ))}
         </div>
         {/* Price Range Filter starts here */}
         <div className="filterItem">
@@ -74,7 +97,12 @@ const Products = () => {
           src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
           alt=""
         ></img>
-        <List catId={catId} maxPrice={maxPrice} sort={sort} />
+        <List
+          catId={catId}
+          maxPrice={maxPrice}
+          sort={sort}
+          subCats={selectedSubCats}
+        />
       </div>
     </div>
   );
